@@ -4,19 +4,19 @@ import Quickshell.Io
 import ".."
 
 Text {
-    property string autonomy: ""
+    property string autonomy: undefined
     property int percentage: 0
     property bool percentMode: true
+    property bool plugged: false
     readonly property var icons: ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
 
     id: root
 
     function getBatteryIcon() {
-        let index = Math.floor((root.percentage / 100) * icons.length)
-
-        if (index >= icons.length) {
-            index = 0
-        }
+        if (root.plugged)
+            return ""
+        let clamped = Math.max(0, Math.min(100, root.percentage))
+        let index = Math.floor((clamped / 100) * (icons.length - 1))
         return root.icons[index]
     }
 
@@ -33,17 +33,35 @@ Text {
         Component.onCompleted: running = true
     }
 
+    Process {
+        id: plugProc
+        command: ["sh", "-c", "acpi -a"]
+        stdout: SplitParser {
+            onRead: data => {
+                root.plugged = data.trim().includes("on-line")
+            }
+        }
+    }
+
     Timer {
         interval: 2000
         running: true
         repeat: true
-        onTriggered: batProc.running = true
+        onTriggered: {
+            batProc.running = true
+            plugProc.running = true
+        }
     }
 
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.percentMode = !root.percentMode
+        onClicked: {
+            if (root.autonomy)
+                root.percentMode = !root.percentMode
+            else
+                root.percentMode = true
+        }
     }
 
     text: root.percentMode ? (root.getBatteryIcon() + " " + root.percentage + "%") : (root.autonomy + " " + root.getBatteryIcon())

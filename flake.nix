@@ -23,6 +23,8 @@
         pkgs.power-profiles-daemon
         pkgs.acpi
         pkgs.brightnessctl
+        pkgs.pulseaudio
+        pkgs.pavucontrol
       ];
       shellHook = ''
         export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml:${quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/qt-6/qml

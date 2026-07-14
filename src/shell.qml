@@ -95,6 +95,7 @@ PanelWindow {
                 anchors.centerIn: parent
 
                 Brightness {}
+                OutputSound {}
             }
         }
 
