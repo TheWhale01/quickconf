@@ -1,39 +1,37 @@
 import QtQuick
 import Quickshell
-import Quickshell.Io
 import QtQuick.Layouts
-import Quickshell.Wayland
-import Quickshell.Hyprland
 
 import "./components"
 
 PanelWindow {
-    property var ramUsage: 0
-    property int cpuTemp: 0
+    property int space: 20
+    property int radius: 21
+    property int spaceOffset: 30
+    property int interSpace: 10
 
     id: root
     anchors.top: true
     anchors.left: true
     anchors.right: true
-    implicitHeight: 25
+    implicitHeight: 30
     color: "transparent"
 
     RowLayout {
-        anchors.leftMargin: 29
+        anchors.leftMargin: root.spaceOffset
         anchors.left: parent.left
         anchors.top: parent.top
-        spacing: 20
+        spacing: root.space
 
         Rectangle {
-            height: root.implicitHeight
-            radius: 21
+            radius: root.radius
+            implicitHeight: root.implicitHeight
             color: Global.backgroundColor
-            implicitWidth: sysStats.implicitWidth + 30
+            implicitWidth: sysStats.implicitWidth + root.spaceOffset
 
             RowLayout {
                 id: sysStats
-                spacing: 10
-                anchors.rightMargin: 20
+                spacing: root.interSpace
                 anchors.centerIn: parent
 
                 CpuUsage {}
@@ -43,18 +41,86 @@ PanelWindow {
         }
 
         Rectangle {
-            radius: 21
-            height: root.implicitHeight
+            radius: root.radius
+            implicitHeight: root.implicitHeight
             color: Global.backgroundColor
-            implicitWidth: clock.implicitWidth + 30
+            implicitWidth: clock.implicitWidth + root.spaceOffset
 
             RowLayout {
                 id: clock
-                spacing: 10
+                spacing: root.interSpace
                 anchors.centerIn: parent
 
                 Caffeine {}
                 Calendar {}
+            }
+        }
+    }
+    RowLayout {
+        anchors.centerIn: parent
+        anchors.top: parent.top
+        spacing: root.space
+
+        Rectangle {
+            radius: root.radius
+            height: root.implicitHeight
+            color: Global.backgroundColor
+            implicitWidth: middle.implicitWidth + root.spaceOffset
+
+            RowLayout {
+                id: middle
+                spacing: root.interSpace
+                anchors.centerIn: parent
+
+                Workspaces {}
+                WindowTitle {}
+            }
+        }
+    }
+    RowLayout {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.rightMargin: root.spaceOffset
+        spacing: root.space
+
+        Rectangle {
+            radius: root.radius
+            implicitHeight: root.implicitHeight
+            color: Global.backgroundColor
+            implicitWidth: brightSound.implicitWidth + root.spaceOffset
+
+            RowLayout {
+                id: brightSound
+                spacing: root.interSpace
+                anchors.centerIn: parent
+            }
+        }
+
+        Rectangle {
+            radius: root.radius
+            implicitHeight: root.implicitHeight
+            color: Global.backgroundColor
+            implicitWidth: sysTray.implicitWidth + root.spaceOffset
+
+            RowLayout {
+                id: sysTray
+                spacing: root.interSpace
+                anchors.centerIn: parent
+            }
+        }
+
+        Rectangle {
+            radius: root.radius
+            implicitHeight: root.implicitHeight
+            color: Global.backgroundColor
+            implicitWidth: shutdown.implicitWidth + root.spaceOffset
+
+            RowLayout {
+                id: shutdown
+                spacing: root.interSpace
+                anchors.centerIn: parent
+
+                Shutdown {}
             }
         }
     }
