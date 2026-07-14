@@ -93,6 +93,8 @@ PanelWindow {
                 id: brightSound
                 spacing: root.interSpace
                 anchors.centerIn: parent
+
+                Brightness {}
             }
         }
 
