@@ -5,7 +5,7 @@ import ".."
 
 Text {
     property double cpuTemp: 0.0
-    property color tempColor: Global.globalTextColor
+    property color tempColor: Global.fontColor
     readonly property color darkRed: "#8b0000"
     readonly property color red: "#ad1f2f"
     readonly property color lightRed: "#d22f2f"
@@ -40,7 +40,7 @@ Text {
         else if (root.cpuTemp >= 60)
             root.tempColor = root.orange
         else if (root.cpuTemp >= 45)
-            root.tempColor = Global.globalTextColor
+            root.tempColor = Global.fontColor
         else if (root.cpuTemp >= 40)
             root.tempColor = root.lightBlue
         else if (root.cpuTemp >= 35)
@@ -76,5 +76,5 @@ Text {
 
     text: " " + root.cpuTemp + "°C"
     color: root.tempColor
-    font: Global.globalFont
+    font: Global.font
 }

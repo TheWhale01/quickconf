@@ -8,23 +8,30 @@ This configuration is entirely modularized, using a global singleton for central
 
 - **System Stats Module**:
   - **CPU Usage**: Efficiently parses aggregate CPU usage ticks from `/proc/stat`.
-  - **RAM Usage**: Automatically monitors memory usage using `free`. Includes a **click-to-toggle feature** to seamlessly switch between percentage view (`%`) and absolute memory usage (`GB`).
+  - **RAM Usage**: Automatically monitors memory usage using `free`. Includes a **click-to-toggle feature** to seamlessly switch between absolute memory usage (`GB`) and percentage view (`%`).
   - **CPU Temperature**: Directly fetches the CPU `Tctl` die temp using `lm-sensors`. Features a dynamic color cascade that shifts text color seamlessly across thresholds from cold blue to warning dark red based on current heat levels.
+- **Utility & Time Module**:
+  - **Caffeine / Idle Inhibitor**: Native Wayland idle inhibitor using the `idle-inhibit-unstable-v1` protocol to prevent the compositor from putting the system to sleep.
+  - **Interactive Clock**: A dynamic real-time clock that toggles between standard 12-hour time and a full 24-hour date/time string on click.
 - **Global Singleton Styling**: Uses a centralized `Global.qml` configuration to distribute unified font styles (`CaskaydiaCove NF`), colors, weights, and component sizing across all layouts.
 - **Nix Flake Powered**: Built-in development shell context providing the exact QT declarative engines, shell environment paths (`QMLLS_BUILD_DIRS`), and runtime binaries required without global system pollution.
 
 ## 📁 Project Structure
 
 ```text
-├── Components/         # Extracted standalone widget logic
-│   ├── CpuTemp.qml     # Temperature tracking + threshold styling
-│   ├── CpuUsage.qml    # Active CPU calculation
-│   └── RamUsage.qml    # Interactive Memory usage component
-├── flake.lock          # Pinning Nix dependencies
-├── flake.nix           # Development shell and script app wrapper
-├── Global.qml          # Project-wide visual definitions (Singleton)
-├── readme.md           # Documentation
-└── shell.qml           # Primary panel architecture and zone positioning
+├── src/
+│   ├── components/         # Extracted standalone widget logic
+│   │   ├── Caffeine.qml    # Wayland idle inhibitor toggle
+│   │   ├── Calendar.qml    # Interactive clock and date display
+│   │   ├── CpuTemp.qml     # Temperature tracking + threshold styling
+│   │   ├── CpuUsage.qml    # Active CPU calculation
+│   │   └── RamUsage.qml    # Interactive Memory usage component
+│   ├── Global.qml          # Project-wide visual definitions (Singleton)
+│   └── shell.qml           # Primary panel architecture and zone positioning
+├── flake.lock              # Pinning Nix dependencies
+├── flake.nix               # Development shell and script app wrapper
+├── readme.md               # Documentation
+└── .envrc                  # Direnv integration for flakes
 ```
 
 ## 🛠️ Installation & Deployment
@@ -55,7 +62,7 @@ To hack on the configuration locally with full Language Server (LSP) and autocom
    cd quickconf
    ```
 
-2. Drop into the development shell context:
+2. Drop into the development shell context (or allow direnv):
    ```bash
    nix develop
    ```
@@ -72,10 +79,10 @@ To hack on the configuration locally with full Language Server (LSP) and autocom
 To modify the overall aesthetic, update the properties inside `src/Global.qml`:
 
 ```qml
-readonly property color globalTextColor: "#cdd6f4"
+readonly property color fontColor: "#cdd6f4"
 readonly property color backgroundColor: "#11111b"
 readonly property color hoverColor: "#f5c2e7"
-readonly property font globalFont: Qt.font({
+readonly property font font: Qt.font({
     family: "CaskaydiaCove NF",
     pixelSize: 13,
     weight: Font.Bold,

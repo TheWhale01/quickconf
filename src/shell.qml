@@ -53,11 +53,8 @@ PanelWindow {
                 spacing: 10
                 anchors.centerIn: parent
 
-                Text {
-                    text: "test !"
-                    color: "white"
-                    font: Global.globalFont
-                }
+                Caffeine {}
+                Calendar {}
             }
         }
     }

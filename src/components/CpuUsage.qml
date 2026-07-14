@@ -36,6 +36,6 @@ Text {
     }
 
     text: "󰍛 " + root.cpuUsage + "%"
-    color: Global.globalTextColor
-    font: Global.globalFont
+    color: Global.fontColor
+    font: Global.font
 }

@@ -4,7 +4,7 @@ import Quickshell.Io
 import ".."
 
 Text {
-    property bool percentMode: true
+    property bool percentMode: false
     property int ramUsagePercent: 0
     property double ramUsageMem: 0.0
 
@@ -52,6 +52,6 @@ Text {
     }
 
     text: root.getText()
-    font: Global.globalFont
-    color: Global.globalTextColor
+    font: Global.font
+    color: Global.fontColor
 }
