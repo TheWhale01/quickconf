@@ -106,6 +106,9 @@ PanelWindow {
                 id: sysTray
                 spacing: root.interSpace
                 anchors.centerIn: parent
+
+                Battery {}
+                PowerProfiles {}
             }
         }
 
