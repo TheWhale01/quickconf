@@ -111,6 +111,8 @@ PanelWindow {
                 spacing: root.interSpace
                 anchors.centerIn: parent
 
+                Network {}
+                Bluetooth {}
                 Battery {}
                 PowerProfiles {}
             }

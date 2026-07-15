@@ -57,7 +57,7 @@ Text {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
         onClicked: {
-            if (root.autonomy)
+            if (!root.plugged)
                 root.percentMode = !root.percentMode
             else
                 root.percentMode = true
