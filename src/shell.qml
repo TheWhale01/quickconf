@@ -96,6 +96,7 @@ PanelWindow {
 
                 Brightness {}
                 OutputSound {}
+                InputSound {}
             }
         }
 
