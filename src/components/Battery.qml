@@ -4,7 +4,7 @@ import Quickshell.Io
 import ".."
 
 Text {
-    property string autonomy: undefined
+    property string autonomy: ""
     property int percentage: 0
     property bool percentMode: true
     property bool plugged: false
@@ -26,7 +26,7 @@ Text {
         stdout: SplitParser {
             onRead: data => {
                 var parts = data.trim().split(/\s+/)
-                root.percentage = parseInt(parts[3])
+                root.percentage = parseInt(parts[parts.length - 1])
                 root.autonomy = Qt.formatTime(new Date("1970-01-01T" + parts[4]), "HH 'h' mm 'min'")
             }
         }

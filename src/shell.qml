@@ -1,3 +1,4 @@
+//@ pragma UseQApplication
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
@@ -10,28 +11,29 @@ PanelWindow {
     property int spaceOffset: 30
     property int interSpace: 10
 
-    id: root
+    id: barWindow
     anchors.top: true
     anchors.left: true
     anchors.right: true
+    margins.top: 8
     implicitHeight: 30
     color: "transparent"
 
     RowLayout {
-        anchors.leftMargin: root.spaceOffset
+        anchors.leftMargin: barWindow.spaceOffset
         anchors.left: parent.left
         anchors.top: parent.top
-        spacing: root.space
+        spacing: barWindow.space
 
         Rectangle {
-            radius: root.radius
-            implicitHeight: root.implicitHeight
+            radius: barWindow.radius
+            implicitHeight: barWindow.implicitHeight
             color: Global.backgroundColor
-            implicitWidth: sysStats.implicitWidth + root.spaceOffset
+            implicitWidth: sysStats.implicitWidth + barWindow.spaceOffset
 
             RowLayout {
                 id: sysStats
-                spacing: root.interSpace
+                spacing: barWindow.interSpace
                 anchors.centerIn: parent
 
                 CpuUsage {}
@@ -41,14 +43,14 @@ PanelWindow {
         }
 
         Rectangle {
-            radius: root.radius
-            implicitHeight: root.implicitHeight
+            radius: barWindow.radius
+            implicitHeight: barWindow.implicitHeight
             color: Global.backgroundColor
-            implicitWidth: clock.implicitWidth + root.spaceOffset
+            implicitWidth: clock.implicitWidth + barWindow.spaceOffset
 
             RowLayout {
                 id: clock
-                spacing: root.interSpace
+                spacing: barWindow.interSpace
                 anchors.centerIn: parent
 
                 Caffeine {}
@@ -59,17 +61,17 @@ PanelWindow {
     RowLayout {
         anchors.centerIn: parent
         anchors.top: parent.top
-        spacing: root.space
+        spacing: barWindow.space
 
         Rectangle {
-            radius: root.radius
-            height: root.implicitHeight
+            radius: barWindow.radius
+            height: barWindow.implicitHeight
             color: Global.backgroundColor
-            implicitWidth: middle.implicitWidth + root.spaceOffset
+            implicitWidth: middle.implicitWidth + barWindow.spaceOffset
 
             RowLayout {
                 id: middle
-                spacing: root.interSpace
+                spacing: barWindow.interSpace
                 anchors.centerIn: parent
 
                 Workspaces {}
@@ -80,18 +82,18 @@ PanelWindow {
     RowLayout {
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.rightMargin: root.spaceOffset
-        spacing: root.space
+        anchors.rightMargin: barWindow.spaceOffset
+        spacing: barWindow.space
 
         Rectangle {
-            radius: root.radius
-            implicitHeight: root.implicitHeight
+            radius: barWindow.radius
+            implicitHeight: barWindow.implicitHeight
             color: Global.backgroundColor
-            implicitWidth: brightSound.implicitWidth + root.spaceOffset
+            implicitWidth: brightSound.implicitWidth + barWindow.spaceOffset
 
             RowLayout {
                 id: brightSound
-                spacing: root.interSpace
+                spacing: barWindow.interSpace
                 anchors.centerIn: parent
 
                 Brightness {}
@@ -101,32 +103,33 @@ PanelWindow {
         }
 
         Rectangle {
-            radius: root.radius
-            implicitHeight: root.implicitHeight
+            radius: barWindow.radius
+            implicitHeight: barWindow.implicitHeight
             color: Global.backgroundColor
-            implicitWidth: sysTray.implicitWidth + root.spaceOffset
+            implicitWidth: sysTray.implicitWidth + barWindow.spaceOffset
 
             RowLayout {
                 id: sysTray
-                spacing: root.interSpace
+                spacing: barWindow.interSpace
                 anchors.centerIn: parent
 
                 Network {}
                 Bluetooth {}
+                Tray {}
                 Battery {}
                 PowerProfiles {}
             }
         }
 
         Rectangle {
-            radius: root.radius
-            implicitHeight: root.implicitHeight
+            radius: barWindow.radius
+            implicitHeight: barWindow.implicitHeight
             color: Global.backgroundColor
-            implicitWidth: shutdown.implicitWidth + root.spaceOffset
+            implicitWidth: shutdown.implicitWidth + barWindow.spaceOffset
 
             RowLayout {
                 id: shutdown
-                spacing: root.interSpace
+                spacing: barWindow.interSpace
                 anchors.centerIn: parent
 
                 Shutdown {}
