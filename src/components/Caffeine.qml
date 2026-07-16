@@ -3,25 +3,24 @@ import QtQuick.Window
 import Quickshell.Wayland
 
 import ".."
+import "states"
 
 Text {
-    property bool active: false
-
     id: root
 
     IdleInhibitor {
         id: inhibitor
         window: root.Window.window
-        enabled: root.active
+        enabled: CaffeineState.active
     }
 
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.active = !root.active
+        onClicked: CaffeineState.active = !CaffeineState.active
     }
 
-    text: active ? "󰅶" : "󰛊"
+    text: CaffeineState.active ? "󰅶" : "󰛊"
     color: Global.fontColor
     font: Global.font
 }

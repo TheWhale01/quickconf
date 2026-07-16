@@ -1,11 +1,8 @@
 import QtQuick
 import Quickshell
-import QtQuick.Layouts
 import Quickshell.Services.SystemTray
 
 Row {
-    readonly property var hiddenApps: ["blueman"]
-
     id: root
     spacing: 15
 
@@ -13,7 +10,6 @@ Row {
         model: SystemTray.items
 
         delegate: Item {
-            readonly property bool isAllowed: !root.hiddenApps.includes(modelData.id)
             property point clickPos: Qt.point(0, 0)
 
             id: trayContainer

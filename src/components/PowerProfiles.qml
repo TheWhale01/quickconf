@@ -2,9 +2,10 @@ import QtQuick
 import Quickshell.Io
 
 import ".."
+import "states"
 
 Text {
-    property string mode: "power-saver"
+    id: root
 
     function getProfileIcon(mode) {
         if (mode == "power-saver")
@@ -15,9 +16,9 @@ Text {
     }
 
     function getNextMode() {
-        if (mode == "power-saver")
+        if (PowerProfilesState.mode == "power-saver")
             return "balanced"
-        else if (mode == "balanced")
+        else if (PowerProfilesState.mode == "balanced")
             return "performance"
         return "power-saver"
     }
@@ -30,7 +31,7 @@ Text {
                 let current = data.trim()
                 // Ensure we only accept valid modes just in case
                 if (current === "power-saver" || current === "balanced" || current === "performance") {
-                    root.mode = current
+                    PowerProfilesState.mode = current
                 }
             }
         }
@@ -47,14 +48,14 @@ Text {
         cursorShape: Qt.PointingHandCursor
         onClicked: {
             let next = root.getNextMode()
+
             setProc.command = ["powerprofilesctl", "set", next]
             setProc.running = true
-            root.mode = next
+            PowerProfilesState.mode = next
         }
     }
 
-    id: root
-    text: root.getProfileIcon(mode)
+    text: root.getProfileIcon(PowerProfilesState.mode)
     color: Global.fontColor
     font: Global.font
 }

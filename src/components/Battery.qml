@@ -2,18 +2,17 @@ import QtQuick
 import Quickshell.Io
 
 import ".."
+import "states"
 
 Text {
     property string autonomy: ""
     property int percentage: 0
-    property bool percentMode: true
-    property bool plugged: false
     readonly property var icons: ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
 
     id: root
 
     function getBatteryIcon() {
-        if (root.plugged)
+        if (BatteryState.plugged)
             return ""
         let clamped = Math.max(0, Math.min(100, root.percentage))
         let index = Math.floor((clamped / 100) * (icons.length - 1))
@@ -26,7 +25,7 @@ Text {
         stdout: SplitParser {
             onRead: data => {
                 var parts = data.trim().split(/\s+/)
-                root.percentage = parseInt(parts[parts.length - 1])
+                root.percentage = parseInt(parts[3])
                 root.autonomy = Qt.formatTime(new Date("1970-01-01T" + parts[4]), "HH 'h' mm 'min'")
             }
         }
@@ -38,7 +37,7 @@ Text {
         command: ["sh", "-c", "acpi -a"]
         stdout: SplitParser {
             onRead: data => {
-                root.plugged = data.trim().includes("on-line")
+                BatteryState.plugged = data.trim().includes("on-line")
             }
         }
     }
@@ -48,8 +47,8 @@ Text {
         running: true
         repeat: true
         onTriggered: {
-            batProc.running = true
             plugProc.running = true
+            batProc.running = true
         }
     }
 
@@ -57,14 +56,14 @@ Text {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
         onClicked: {
-            if (!root.plugged)
-                root.percentMode = !root.percentMode
+            if (BatteryState.plugged && root.percentage == 100)
+                BatteryState.percentMode = true
             else
-                root.percentMode = true
+                BatteryState.percentMode = !BatteryState.percentMode
         }
     }
 
-    text: root.percentMode ? (root.getBatteryIcon() + " " + root.percentage + "%") : (root.autonomy + " " + root.getBatteryIcon())
+    text: BatteryState.percentMode ? (root.getBatteryIcon() + " " + root.percentage + "%") : (root.autonomy + " " + root.getBatteryIcon())
     color: Global.fontColor
     font: Global.font
 }
