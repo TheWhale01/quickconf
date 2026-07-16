@@ -5,6 +5,7 @@ import Quickshell.Services.SystemTray
 Row {
     id: root
     spacing: 15
+    readonly property var smallerIcons: ["blueman", "Network"]
 
     Repeater {
         model: SystemTray.items
@@ -19,8 +20,8 @@ Row {
             Image {
                 anchors.centerIn: parent
                 source: modelData.icon
-                sourceSize.width: 18
-                sourceSize.height: 18
+                sourceSize.width: smallerIcons.includes(modelData.title) ? 9 : 18
+                sourceSize.height: smallerIcons.includes(modelData.title) ? 9 : 18
             }
 
             QsMenuAnchor {
