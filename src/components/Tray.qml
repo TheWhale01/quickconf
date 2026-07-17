@@ -5,7 +5,6 @@ import Quickshell.Services.SystemTray
 Row {
     id: root
     spacing: 15
-    readonly property var smallerIcons: ["blueman", "Network"]
 
     Repeater {
         model: SystemTray.items
@@ -18,10 +17,12 @@ Row {
             height: 25
 
             Image {
+                readonly property var reducedIcons: ["spotify-client", "nm-applet", "blueman", "steam"]
+
                 anchors.centerIn: parent
                 source: modelData.icon
-                sourceSize.width: smallerIcons.includes(modelData.title) ? 9 : 18
-                sourceSize.height: smallerIcons.includes(modelData.title) ? 9 : 18
+                sourceSize.width: reducedIcons.includes(modelData.id) ? 8 : 15
+                sourceSize.height: reducedIcons.includes(modelData.id) ? 8 : 15
             }
 
             QsMenuAnchor {
@@ -37,6 +38,7 @@ Row {
                 cursorShape: Qt.PointingHandCursor
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: (mouse) => {
+                    console.log(modelData.id)
                     if (mouse.button == Qt.LeftButton)
                         modelData.activate()
                     else if ((mouse.button == Qt.RightButton) && modelData.hasMenu)

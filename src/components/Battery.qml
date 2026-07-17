@@ -26,6 +26,8 @@ Text {
             onRead: data => {
                 var parts = data.trim().split(/\s+/)
                 root.percentage = parseInt(parts[3])
+                if (root.percentage == 0)
+                    root.percentage = parseInt(parts[4])
                 root.autonomy = Qt.formatTime(new Date("1970-01-01T" + parts[4]), "HH 'h' mm 'min'")
             }
         }
