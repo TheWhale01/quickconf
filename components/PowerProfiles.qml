@@ -8,7 +8,7 @@ Text {
     id: root
 
     function getProfileIcon(mode) {
-        if (mode == "power-saver")
+        if (mode == "powersave")
             return ""
         else if (mode == "balanced")
             return ""
@@ -16,21 +16,20 @@ Text {
     }
 
     function getNextMode() {
-        if (PowerProfilesState.mode == "power-saver")
+        if (PowerProfilesState.mode == "powersave")
             return "balanced"
         else if (PowerProfilesState.mode == "balanced")
-            return "performance"
-        return "power-saver"
+            return "throughput-performance"
+        return "powersave"
     }
 
     Process {
         id: readProc
-        command: ["powerprofilesctl", "get"]
+        command: ["tuned-adm", "active"]
         stdout: SplitParser {
             onRead: data => {
-                let current = data.trim()
-                // Ensure we only accept valid modes just in case
-                if (current === "power-saver" || current === "balanced" || current === "performance") {
+                let current = data.trim().replace('Current active profile: ', '')
+                if (current === "powersave" || current === "balanced" || current === "throughput-performance") {
                     PowerProfilesState.mode = current
                 }
             }
@@ -49,7 +48,7 @@ Text {
         onClicked: {
             let next = root.getNextMode()
 
-            setProc.command = ["powerprofilesctl", "set", next]
+            setProc.command = ["tuned-adm", "profile", next]
             setProc.running = true
             PowerProfilesState.mode = next
         }
