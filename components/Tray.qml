@@ -17,12 +17,10 @@ Row {
             height: 25
 
             Image {
-                readonly property var reducedIcons: ["spotify-client", "nm-applet", "blueman", "steam"]
-
                 anchors.centerIn: parent
                 source: modelData.icon
-                sourceSize.width: reducedIcons.includes(modelData.id) ? 8 : 15
-                sourceSize.height: reducedIcons.includes(modelData.id) ? 8 : 15
+                sourceSize.width: 15
+                sourceSize.height: 15
             }
 
             QsMenuAnchor {
