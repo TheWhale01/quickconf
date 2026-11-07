@@ -120,8 +120,6 @@ Scope {
                         spacing: barWindow.interSpace
                         anchors.centerIn: parent
 
-                        // Network {}
-                        // Bluetooth {}
                         Tray {}
                         Battery {}
                         PowerProfiles {}

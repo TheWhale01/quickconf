@@ -10,6 +10,7 @@ QtObject {
         pixelSize: 13,
         weight: Font.Bold,
     })
+    readonly property string locale: "en_GB"
 
     id: global
 }
