@@ -1,10 +1,13 @@
 import QtQuick
 import Quickshell
+import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 
 Row {
     id: root
     spacing: 15
+
+    readonly property int iconSize: 17
 
     Repeater {
         model: SystemTray.items
@@ -14,13 +17,14 @@ Row {
 
             id: trayContainer
             width: 10
-            height: 25
+            height: 10
 
-            Image {
+            IconImage {
                 anchors.centerIn: parent
                 source: modelData.icon
-                sourceSize.width: 15
-                sourceSize.height: 15
+                mipmap: true
+                width: root.iconSize
+                height: root.iconSize
             }
 
             QsMenuAnchor {
